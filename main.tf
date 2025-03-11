@@ -45,15 +45,13 @@ module "autoscaling" {
 
   vpc_zone_identifier = module.blog_vpc.public_subnets
   security_groups = [module.blog_sg.security_group_id]
+  target_group_arns = [for k,v in module.blog_alb.target_groups : v.arn]
 
   image_id      = data.aws_ami.app_ami.id
   instance_type = var.instance_type
 }
 
-resource "aws_autoscaling_attachment" "blog_attachment" {
-  autoscaling_group_name = module.autoscaling.autoscaling_group_name
-  lb_target_group_arn    = module.blog_alb.target_group_arns[0]
-}
+
 
 module "blog_alb" {
   source = "terraform-aws-modules/alb/aws"
