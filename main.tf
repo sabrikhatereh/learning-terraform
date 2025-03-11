@@ -18,7 +18,7 @@ data "aws_vpc" "default" {
   default = true
 }
 
-resource "aws_instance" "belog" {
+resource "aws_instance" "blog" {
   ami           = data.aws_ami.app_ami.id
   instance_type = var.instance_type
 
@@ -28,7 +28,7 @@ resource "aws_instance" "belog" {
   }
 }
 
-module "belog_sg" {
+module "blog_sg" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "5.3.0"
   name    = "belog_new"
